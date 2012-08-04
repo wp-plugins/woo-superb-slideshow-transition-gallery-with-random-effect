@@ -1,0 +1,23 @@
+/* woo_class_widget */
+/* woo_class_ = default string */
+/* widget = gallery type */
+/* if you want to create new css for new gallery just use tha above combination of class, now
+in below i have created new class for widget gallery type */
+
+.woo_class_widget 
+{ 
+	/*padding: 5px;
+	padding-top:5px;
+	padding-left:0px;
+	padding-right:0px;
+	padding-bottom:0px;
+	width: 200px; */
+	/*a width should be defined for transition to work*/
+	/*border: 2px solid #CCCCCC;*/
+	/*padding: 5px*/
+}
+
+.woo_class_widget img
+{
+	border-width: 0;
+}
