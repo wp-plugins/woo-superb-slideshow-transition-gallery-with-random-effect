@@ -1,6 +1,6 @@
 /**
  *     Woo superb slideshow transition gallery with random effect
- *     Copyright (C) 2012  www.gopiplus.com
+ *     Copyright (C) 2011 - 2013  www.gopiplus.com
  * 
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
@@ -74,7 +74,7 @@ function _woo_delete(id)
 {
 	if(confirm("Do you want to delete this record?"))
 	{
-		document.frm_woo_display.action="options-general.php?page=woo-transition-gallery-with-random-effect/image-management.php&AC=DEL&DID="+id;
+		document.frm_woo_display.action="options-general.php?page=woo-superb-slideshow-transition-gallery-with-random-effect/image-management.php&AC=DEL&DID="+id;
 		document.frm_woo_display.submit();
 	}
 }	

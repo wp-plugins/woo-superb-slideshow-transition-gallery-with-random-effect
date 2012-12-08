@@ -5,68 +5,55 @@ Plugin Name: Woo superb slideshow transition gallery with random effect
 Plugin URI: http://www.gopiplus.com/work/2010/09/19/woo-superb-slideshow-transition-gallery-with-random-effect/
 Description: Don't just display images, showcase them in style using this gallery effect plugin. Randomly chosen Transitional effects in IE browsers.  
 Author: Gopi.R
-Version: 5.0
+Version: 6.0
 Author URI: http://www.gopiplus.com/work/2010/09/19/woo-superb-slideshow-transition-gallery-with-random-effect/
 Donate link: http://www.gopiplus.com/work/2010/09/19/woo-superb-slideshow-transition-gallery-with-random-effect/
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
 global $wpdb, $wp_version;
 define("WP_woo_TABLE", $wpdb->prefix . "woo_transition");
 
-function woo_show() 
+function woo_show( $type = "widget" , $random = "YES" ) 
 {
-	$woo_package = "";
-	global $wpdb;
-	$woo_random = get_option('woo_random');
-	$woo_type = get_option('woo_type');
-	$sSql = "select woo_path,woo_link,woo_target,woo_title from ".WP_woo_TABLE." where 1=1";
-	$sSql = $sSql . " and woo_type='".$woo_type."'";
-	if($woo_random == "YES"){ $sSql = $sSql . " ORDER BY RAND()"; }else{ $sSql = $sSql . " ORDER BY woo_order"; }
-	$data = $wpdb->get_results($sSql);
-	if ( ! empty($data) ) 
-	{
-		foreach ( $data as $data ) 
-		{
-			$woo_package = $woo_package .'["'.$data->woo_path.'", "'.$data->woo_link.'", "'.$data->woo_target.'", "'.$data->woo_title.'"],';
-		}
-	}	
-	$woo_package = substr($woo_package,0,(strlen($woo_package)-1));
-	?>
-	<link rel='stylesheet' href='<?php echo get_option('siteurl') ?>/wp-content/plugins/woo-superb-slideshow-transition-gallery-with-random-effect/style.css' type='text/css' />
-    <script type="text/javascript">
-	var flashyshow=new woo_target({ 
-		wrapperid: "woo_id_<?php echo $woo_type; ?>", 
-		wrapperclass: "woo_class_<?php echo $woo_type; ?>", 
-		imagearray: [
-			<?php echo $woo_package; ?>
-		],
-		pause: <?php echo get_option('woo_pause'); ?>, 
-		transduration: <?php echo get_option('woo_transduration'); ?> 
-	})
-	</script>
-    <?php
+	$arr = array();
+	$arr["type"] = $type;
+	$arr["random"] = $random;
+	echo woo_shortcode($arr);
 }
 
-
-add_filter('the_content','woo_show_filter');
-
-function woo_show_filter($content){
-	return 	preg_replace_callback('/\[woo-superb-slideshow=(.*?)\]/sim','woo_show_filter_Callback',$content);
-}
-
-function woo_show_filter_Callback($matches) 
+function woo_shortcode( $atts ) 
 {
 	global $wpdb;
+	global $Woo_ScriptInserted;
 	$woo_xml = "";
 	$woo_package = "";
 	
-	$var = $matches[1];
-	list($woo_type, $woo_random) = split('[=.-]', $var);
-	if($woo_type==""){$woo_type = "widget";}
-	if($woo_random==""){$woo_random = "YES";}
+	// [woo-superb-slideshow type="widget" random="YES"]
+	if ( ! is_array( $atts ) )
+	{
+		return '';
+	}
+	$woo_type = $atts['type'];
+	$woo_random = $atts['random'];
+	
 	$sSql = "select woo_path,woo_link,woo_target,woo_title from ".WP_woo_TABLE." where 1=1";
-	$sSql = $sSql . " and woo_type='".$woo_type."'";
-	if($woo_random == "YES"){ $sSql = $sSql . " ORDER BY RAND()"; }else{ $sSql = $sSql . " ORDER BY woo_order"; }
+
+	if($woo_random <> "")
+	{ 
+		$sSql = $sSql . " and woo_type='".$woo_type."'"; 
+	}
+	
+	if($woo_random == "YES")
+	{ 
+		$sSql = $sSql . " ORDER BY RAND()"; 
+	}
+	else
+	{ 
+		$sSql = $sSql . " ORDER BY woo_order"; 
+	}
+	
 	$data = $wpdb->get_results($sSql);
 	if ( ! empty($data) ) 
 	{
@@ -74,15 +61,26 @@ function woo_show_filter_Callback($matches)
 		{
 			$woo_package = $woo_package .'["'.$data->woo_path.'", "'.$data->woo_link.'", "'.$data->woo_target.'", "'.$data->woo_title.'"],';
 		}
+		
+		$woo_package = substr($woo_package,0,(strlen($woo_package)-1));
+		$newwrapperid = $woo_type;
+		$woo_pluginurl = get_option('siteurl') . "/wp-content/plugins/woo-superb-slideshow-transition-gallery-with-random-effect/";
+		
+		if (!isset($Woo_ScriptInserted) || $Woo_ScriptInserted !== true)
+		{
+			$Woo_ScriptInserted = true;
+			$woo_xml = $woo_xml .'<link rel="stylesheet" href="'.$woo_pluginurl.'style.css" type="text/css" />';
+		}
+		
+		$woo_xml = $woo_xml .'<script type="text/javascript">';
+		$woo_xml = $woo_xml .'var flashyshow=new woo_target({ wrapperid: "'.$newwrapperid.'", wrapperclass: "woo_class_'.$newwrapperid.'", imagearray: ['.$woo_package.'],pause: '. get_option('woo_pause').',transduration: '. get_option('woo_transduration').' })';
+		$woo_xml = $woo_xml .'</script>';
 	}
-	$woo_package = substr($woo_package,0,(strlen($woo_package)-1));
-	$newwrapperid = $woo_type;
-	$woo_pluginurl = get_option('siteurl') . "/wp-content/plugins/woo-superb-slideshow-transition-gallery-with-random-effect/";
-	$woo_xml = $woo_xml .'<link rel="stylesheet" href="'.$woo_pluginurl.'style.css" type="text/css" />';
-    //$woo_xml = $woo_xml .'<script type="text/javascript" src="'.$woo_pluginurl.'woo-superb-slideshow-transition-gallery-with-random-effect.js"><script>';
-    $woo_xml = $woo_xml .'<script type="text/javascript">';
-	$woo_xml = $woo_xml .'var flashyshow=new woo_target({ wrapperid: "'.$newwrapperid.'", wrapperclass: "woo_class_'.$newwrapperid.'", imagearray: ['.$woo_package.'],pause: '. get_option('woo_pause').',transduration: '. get_option('woo_transduration').' })';
-	$woo_xml = $woo_xml .'</script>';
+	else
+	{
+		$woo_xml = "Record not found: " . $woo_type;
+	}
+	
 	return $woo_xml;
 }
 
@@ -193,32 +191,31 @@ function woo_admin_option()
 
 function woo_control()
 {
-	echo '<p>Woo superb slideshow transition gallery with random effect.<br><br> To change the setting goto "Woo superb slideshow transition gallery with random effect" link under SETTING menu.';
-	echo ' <a href="options-general.php?page=woo-superb-slideshow-transition-gallery-with-random-effect/woo-superb-slideshow-transition-gallery-with-random-effect.php">';
-	echo 'click here</a></p>';
+	echo 'Woo Superb Slideshow';
 }
 
 function woo_widget_init() 
 {
 	if(function_exists('wp_register_sidebar_widget')) 	
 	{
-		wp_register_sidebar_widget('Woo-superb-slideshow-transition', 'Woo superb slideshow transition gallery with random effect', 'woo_widget');
+		wp_register_sidebar_widget('Woo-superb-slideshow-transition', 'Woo superb slideshow', 'woo_widget');
 	}
 	
 	if(function_exists('wp_register_widget_control')) 	
 	{
-		wp_register_widget_control('Woo-superb-slideshow-transition', array('Woo superb slideshow transition gallery with random effect', 'widgets'), 'woo_control');
+		wp_register_widget_control('Woo-superb-slideshow-transition', array('Woo superb slideshow', 'widgets'), 'woo_control');
 	} 
 }
 
 function woo_deactivation() 
 {
+	// No action required.
 }
 
 function woo_add_to_menu() 
 {
-	add_options_page('Woo superb slideshow transition gallery with random effect', 'Woo superb slideshow transition gallery with random effect', 'manage_options', __FILE__, 'woo_admin_option' );
-	add_options_page('Woo superb slideshow transition gallery with random effect', '', 'manage_options', "woo-superb-slideshow-transition-gallery-with-random-effect/image-management.php",'' );
+	add_options_page('Woo superb slideshow', 'Woo superb slideshow', 'manage_options', __FILE__, 'woo_admin_option' );
+	add_options_page('Woo superb slideshow', '', 'manage_options', "woo-superb-slideshow-transition-gallery-with-random-effect/image-management.php",'' );
 }
 
 if (is_admin()) 
@@ -234,6 +231,7 @@ function woo_add_javascript_files()
 	}	
 }
 
+add_shortcode( 'woo-superb-slideshow', 'woo_shortcode' );
 add_action('init', 'woo_add_javascript_files');
 add_action("plugins_loaded", "woo_widget_init");
 register_activation_hook(__FILE__, 'woo_install');

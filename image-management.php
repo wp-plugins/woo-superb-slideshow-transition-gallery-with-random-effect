@@ -1,7 +1,7 @@
 <!--
 /**
  *     Woo superb slideshow transition gallery with random effect
- *     Copyright (C) 2012  www.gopiplus.com
+ *     Copyright (C) 2011 - 2013 www.gopiplus.com
  * 
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
@@ -183,7 +183,7 @@
 			<td align="left" valign="middle"><?php echo(stripslashes($data->woo_target)); ?></td>
             <td align="left" valign="middle"><?php echo(stripslashes($data->woo_order)); ?></td>
             <td align="left" valign="middle"><?php echo(stripslashes($data->woo_status)); ?></td>
-            <td align="left" valign="middle"><a href="options-general.php?page=woo-superb-slideshow-transition-gallery-with-random-effect/image-management.php&DID=<?php echo($data->woo_id); ?>">Edit</a> &nbsp; <a onClick="javascript:_cas_delete('<?php echo($data->woo_id); ?>')" href="javascript:void(0);">Delete</a> </td>
+            <td align="left" valign="middle"><a href="options-general.php?page=woo-superb-slideshow-transition-gallery-with-random-effect/image-management.php&DID=<?php echo($data->woo_id); ?>">Edit</a> &nbsp; <a onClick="javascript:_woo_delete('<?php echo($data->woo_id); ?>')" href="javascript:void(0);">Delete</a> </td>
           </tr>
         </tbody>
         <?php $i = $i+1; } ?>
