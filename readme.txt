@@ -4,9 +4,9 @@ Donate link: http://www.gopiplus.com/work/2010/09/19/woo-superb-slideshow-transi
 Author URI: http://gopi.coolpage.biz/demo/about/
 Plugin URI: http://www.gopiplus.com/work/2010/09/19/woo-superb-slideshow-transition-gallery-with-random-effect/
 Tags: image, slide show, slideshow, gallery, images, widget, translucent, translucent image, imagegallery, sidebar, Transitional
-Requires at least: 3.0
-Tested up to: 3.5
-Stable tag: 6.0
+Requires at least: 3.4
+Tested up to: 3.6
+Stable tag: 7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	
@@ -96,6 +96,15 @@ Tested up to 3.4
 = 5.0 =
 New demo link, www.gopiplus.com
 
+= 6.0 =
+Tested up to 3.5
+Admin Delete Link problem has been fixed.
+Slight change in the short code, Please find the new short code for your gallery.
+New PHP code to load the plugin directly from theme file.
+
+= 7.0 =
+Tested up to 3.6
+
 == Upgrade Notice ==
 
 = 1.0 =	
@@ -118,4 +127,7 @@ Tested up to 3.5
 Admin Delete Link problem has been fixed.
 Slight change in the short code, Please find the new short code for your gallery.
 New PHP code to load the plugin directly from theme file.
+
+= 7.0 =
+Tested up to 3.6
 
