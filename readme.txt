@@ -6,7 +6,7 @@ Plugin URI: http://www.gopiplus.com/work/2010/09/19/woo-superb-slideshow-transit
 Tags: image, slide show, slideshow, gallery, images, widget, translucent, translucent image, imagegallery, sidebar, Transitional
 Requires at least: 3.4
 Tested up to: 3.6
-Stable tag: 7.0
+Stable tag: 7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	
@@ -105,6 +105,11 @@ New PHP code to load the plugin directly from theme file.
 = 7.0 =
 Tested up to 3.6
 
+= 7.1 =
+
+Added security feature.
+New admin layout.
+
 == Upgrade Notice ==
 
 = 1.0 =	
@@ -130,4 +135,9 @@ New PHP code to load the plugin directly from theme file.
 
 = 7.0 =
 Tested up to 3.6
+
+= 7.1 =
+
+Added security feature.
+New admin layout.
 

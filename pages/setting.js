@@ -45,7 +45,7 @@ function woo_submit()
 //	}
 	else if(document.form_woo.woo_type.value=="")
 	{
-		alert("Please enter the gallery type.")
+		alert("Please select the gallery type.")
 		document.form_woo.woo_type.focus();
 		return false;
 	}
@@ -70,23 +70,23 @@ function woo_submit()
 	_woo_escapeVal(document.form_woo.woo_text,'<br>');
 }
 
-function _woo_delete(id)
+function woo_delete(id)
 {
 	if(confirm("Do you want to delete this record?"))
 	{
-		document.frm_woo_display.action="options-general.php?page=woo-superb-slideshow-transition-gallery-with-random-effect/image-management.php&AC=DEL&DID="+id;
+		document.frm_woo_display.action="options-general.php?page=woo-superb-slideshow&ac=del&did="+id;
 		document.frm_woo_display.submit();
 	}
 }	
 
-function _woo_help()
+function woo_help()
 {
 	window.open("http://www.gopiplus.com/work/2010/09/19/woo-superb-slideshow-transition-gallery-with-random-effect/");
 }
 
-function _woo_redirect()
+function woo_redirect()
 {
-	window.location = "options-general.php?page=woo-superb-slideshow-transition-gallery-with-random-effect/image-management.php";
+	window.location = "options-general.php?page=woo-superb-slideshow";
 }
 
 function _woo_escapeVal(textarea,replaceWith)

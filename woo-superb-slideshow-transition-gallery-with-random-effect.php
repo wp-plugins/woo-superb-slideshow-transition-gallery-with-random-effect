@@ -5,7 +5,7 @@ Plugin Name: Woo superb slideshow transition gallery with random effect
 Plugin URI: http://www.gopiplus.com/work/2010/09/19/woo-superb-slideshow-transition-gallery-with-random-effect/
 Description: Don't just display images, showcase them in style using this gallery effect plugin. Randomly chosen Transitional effects in IE browsers.  
 Author: Gopi.R
-Version: 7.0
+Version: 7.1
 Author URI: http://www.gopiplus.com/work/2010/09/19/woo-superb-slideshow-transition-gallery-with-random-effect/
 Donate link: http://www.gopiplus.com/work/2010/09/19/woo-superb-slideshow-transition-gallery-with-random-effect/
 License: GPLv2 or later
@@ -14,6 +14,10 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 global $wpdb, $wp_version;
 define("WP_woo_TABLE", $wpdb->prefix . "woo_transition");
+define("WP_woo_UNIQUE_NAME", "woo-superb-slideshow");
+define("WP_woo_TITLE", "Woo superb slideshow");
+define('WP_woo_FAV', 'http://www.gopiplus.com/work/2010/09/19/woo-superb-slideshow-transition-gallery-with-random-effect/');
+define('WP_woo_LINK', 'Check official website for more information <a target="_blank" href="'.WP_woo_FAV.'">click here</a>');
 
 function woo_show( $type = "widget" , $random = "YES" ) 
 {
@@ -140,53 +144,23 @@ function woo_widget($args)
 
 function woo_admin_option() 
 {
-	echo "<div class='wrap'>";
-	echo "<h2>Woo superb slideshow transition gallery with random effect</h2>"; 
-	
-	$woo_title = get_option('woo_title');
-	$woo_pause = get_option('woo_pause');
-	$woo_transduration = get_option('woo_transduration');
-	$woo_random = get_option('woo_random');
-	$woo_type = get_option('woo_type');
-	if (@$_POST['woo_submit']) 
+	global $wpdb;
+	$current_page = isset($_GET['ac']) ? $_GET['ac'] : '';
+	switch($current_page)
 	{
-		$woo_title = stripslashes($_POST['woo_title']);
-		$woo_pause = stripslashes($_POST['woo_pause']);
-		$woo_transduration = stripslashes($_POST['woo_transduration']);
-		$woo_random = stripslashes($_POST['woo_random']);
-		$woo_type = stripslashes($_POST['woo_type']);
-		
-		update_option('woo_title', $woo_title );
-		update_option('woo_pause', $woo_pause );
-		update_option('woo_transduration', $woo_transduration );
-		update_option('woo_random', $woo_random );
-		update_option('woo_type', $woo_type );
+		case 'edit':
+			include('pages/image-management-edit.php');
+			break;
+		case 'add':
+			include('pages/image-management-add.php');
+			break;
+		case 'set':
+			include('pages/image-setting.php');
+			break;
+		default:
+			include('pages/image-management-show.php');
+			break;
 	}
-	?><form name="form_woo" method="post" action="">
-	<?php
-	echo '<p>Title:<br><input  style="width: 450px;" maxlength="200" type="text" value="';
-	echo $woo_title . '" name="woo_title" id="woo_title" /> Widget title.</p>';
-	echo '<p>Pause:<br><input  style="width: 100px;" maxlength="4" type="text" value="';
-	echo $woo_pause . '" name="woo_pause" id="woo_pause" /> Only Number / Pause between content change (millisec).</p>';
-	echo '<p>Transduration:<br><input  style="width: 100px;" maxlength="4" type="text" value="';
-	echo $woo_transduration . '" name="woo_transduration" id="woo_transduration" /> Only Number / Duration of transition (affects only IE users).</p>';
-	echo '<p>Random :<br><input  style="width: 100px;" type="text" value="';
-	echo $woo_random . '" name="woo_random" id="woo_random" /> (YES/NO)</p>';
-	echo '<p>Type:<br><input  style="width: 150px;" type="text" value="';
-	echo $woo_type . '" name="woo_type" id="woo_type" /> This field is to group the images.</p>';
-	echo '<input name="woo_submit" id="woo_submit" class="button-primary" value="Submit" type="submit" />';
-	?>
-	</form>
-	<table width="100%">
-		<tr>
-		  <td align="right"><input name="text_management" lang="text_management" class="button-primary" onClick="location.href='options-general.php?page=woo-superb-slideshow-transition-gallery-with-random-effect/image-management.php'" value="Go to - Image Management" type="button" />
-			<input name="setting_management" lang="setting_management" class="button-primary" onClick="location.href='options-general.php?page=woo-superb-slideshow-transition-gallery-with-random-effect/woo-superb-slideshow-transition-gallery-with-random-effect.php'" value="Go to - Gallery Setting" type="button" />
-		  </td>
-		</tr>
-	  </table>
-	<?php
-	include_once("help.php");
-	echo "</div>";
 }
 
 function woo_control()
@@ -214,8 +188,7 @@ function woo_deactivation()
 
 function woo_add_to_menu() 
 {
-	add_options_page('Woo superb slideshow', 'Woo superb slideshow', 'manage_options', __FILE__, 'woo_admin_option' );
-	add_options_page('Woo superb slideshow', '', 'manage_options', "woo-superb-slideshow-transition-gallery-with-random-effect/image-management.php",'' );
+	add_options_page('Woo superb slideshow', 'Woo superb slideshow', 'manage_options', 'woo-superb-slideshow', 'woo_admin_option' );
 }
 
 if (is_admin()) 
