@@ -18,7 +18,7 @@ if (isset($_POST['frm_woo_display']) && $_POST['frm_woo_display'] == 'yes')
 	
 	if ($result != '1')
 	{
-		?><div class="error fade"><p><strong>Oops, selected details doesn't exist (1).</strong></p></div><?php
+		?><div class="error fade"><p><strong><?php _e('Oops, selected details doesnt exist', 'woo-transition'); ?></strong></p></div><?php
 	}
 	else
 	{
@@ -36,7 +36,7 @@ if (isset($_POST['frm_woo_display']) && $_POST['frm_woo_display'] == 'yes')
 			
 			//	Set success message
 			$woo_success_msg = TRUE;
-			$woo_success = __('Selected record was successfully deleted.', WP_woo_UNIQUE_NAME);
+			$woo_success = __('Selected record was successfully deleted.', 'woo-transition');
 		}
 	}
 	
@@ -48,70 +48,67 @@ if (isset($_POST['frm_woo_display']) && $_POST['frm_woo_display'] == 'yes')
 ?>
 <div class="wrap">
   <div id="icon-edit" class="icon32 icon32-posts-post"></div>
-    <h2><?php echo WP_woo_TITLE ?><a class="add-new-h2" href="<?php echo get_option('siteurl'); ?>/wp-admin/options-general.php?page=woo-superb-slideshow&amp;ac=add">Add New</a></h2>
+    <h2><?php _e('Woo superb slideshow', 'woo-transition'); ?>
+	<a class="add-new-h2" href="<?php echo WP_woo_ADMIN_URL; ?>&amp;ac=add"><?php _e('Add New', 'woo-transition'); ?></a></h2>
     <div class="tool-box">
 	<?php
 		$sSql = "SELECT * FROM `".WP_woo_TABLE."` order by woo_type, woo_order";
 		$myData = array();
 		$myData = $wpdb->get_results($sSql, ARRAY_A);
 		?>
-		<script language="JavaScript" src="<?php echo get_option('siteurl'); ?>/wp-content/plugins/woo-superb-slideshow-transition-gallery-with-random-effect/pages/setting.js"></script>
+		<script language="JavaScript" src="<?php echo WP_woo_PLUGIN_URL; ?>/pages/setting.js"></script>
 		<form name="frm_woo_display" method="post">
       <table width="100%" class="widefat" id="straymanage">
         <thead>
           <tr>
             <th class="check-column" scope="col"><input type="checkbox" /></th>
-			<th scope="col">Type</th>
-            <th scope="col">URL</th>
-			<th scope="col">Target</th>
-            <th scope="col">Order</th>
-            <th scope="col">Display</th>
+			<th scope="col"><?php _e('Type', 'woo-transition'); ?></th>
+            <th scope="col"><?php _e('URL', 'woo-transition'); ?></th>
+			<th scope="col"><?php _e('Target', 'woo-transition'); ?></th>
+            <th scope="col"><?php _e('Order', 'woo-transition'); ?></th>
+            <th scope="col"><?php _e('Display', 'woo-transition'); ?></th>
           </tr>
         </thead>
 		<tfoot>
           <tr>
             <th class="check-column" scope="col"><input type="checkbox" /></th>
-			<th scope="col">Type</th>
-            <th scope="col">Path</th>
-			<th scope="col">Target</th>
-            <th scope="col">Order</th>
-            <th scope="col">Display</th>
+			<th scope="col"><?php _e('Type', 'woo-transition'); ?></th>
+            <th scope="col"><?php _e('URL', 'woo-transition'); ?></th>
+			<th scope="col"><?php _e('Target', 'woo-transition'); ?></th>
+            <th scope="col"><?php _e('Order', 'woo-transition'); ?></th>
+            <th scope="col"><?php _e('Display', 'woo-transition'); ?></th>
           </tr>
         </tfoot>
 		<tbody>
 			<?php 
 			$i = 0;
-			$displayisthere = FALSE;
-			foreach ($myData as $data)
+			if(count($myData) > 0 )
 			{
-				if($data['woo_status'] == 'YES') 
+				foreach ($myData as $data)
 				{
-					$displayisthere = TRUE; 
-				}
 				?>
 				<tr class="<?php if ($i&1) { echo'alternate'; } else { echo ''; }?>">
 					<td align="left"><input type="checkbox" value="<?php echo $data['woo_id']; ?>" name="woo_group_item[]"></td>
 					<td>
 					<strong><?php echo esc_html(stripslashes($data['woo_type'])); ?></strong>
 					<div class="row-actions">
-						<span class="edit"><a title="Edit" href="<?php echo get_option('siteurl'); ?>/wp-admin/options-general.php?page=woo-superb-slideshow&amp;ac=edit&amp;did=<?php echo $data['woo_id']; ?>">Edit</a> | </span>
-						<span class="trash"><a onClick="javascript:woo_delete('<?php echo $data['woo_id']; ?>')" href="javascript:void(0);">Delete</a></span> 
+					<span class="edit"><a title="Edit" href="<?php echo WP_woo_ADMIN_URL; ?>&amp;ac=edit&amp;did=<?php echo $data['woo_id']; ?>"><?php _e('Edit', 'woo-transition'); ?></a> | </span>
+					<span class="trash"><a onClick="javascript:woo_delete('<?php echo $data['woo_id']; ?>')" href="javascript:void(0);"><?php _e('Delete', 'woo-transition'); ?></a></span> 
 					</div>
 					</td>
-					<td><a href="<?php echo esc_html(stripslashes($data['woo_path'])); ?>" target="_blank"><?php echo esc_html(stripslashes($data['woo_path'])); ?></a></td>
+					<td><a href="<?php echo $data['woo_path']; ?>" target="_blank"><?php echo $data['woo_path']; ?></a></td>
 					<td><?php echo esc_html(stripslashes($data['woo_target'])); ?></td>
 					<td><?php echo esc_html(stripslashes($data['woo_order'])); ?></td>
 					<td><?php echo esc_html(stripslashes($data['woo_status'])); ?></td>
 				</tr>
 				<?php 
 				$i = $i+1; 
-				} 
-			?>
-			<?php 
-			if ($displayisthere == FALSE) 
-			{ 
-				?><tr><td colspan="6" align="center">No records available.</td></tr><?php 
-			} 
+				}
+			}
+			else
+			{
+				?><tr><td colspan="6" align="center"><?php _e('No records available.', 'woo-transition'); ?></td></tr><?php 
+			}
 			?>
 		</tbody>
         </table>
@@ -120,18 +117,21 @@ if (isset($_POST['frm_woo_display']) && $_POST['frm_woo_display'] == 'yes')
       </form>	
 	  <div class="tablenav">
 	  <h2>
-	  <a class="button add-new-h2" href="<?php echo get_option('siteurl'); ?>/wp-admin/options-general.php?page=woo-superb-slideshow&amp;ac=add">Add New</a>
-	  <a class="button add-new-h2" href="<?php echo get_option('siteurl'); ?>/wp-admin/options-general.php?page=woo-superb-slideshow&amp;ac=set">Widget setting</a>
-	  <a class="button add-new-h2" target="_blank" href="<?php echo WP_woo_FAV; ?>">Help</a>
+	  <a class="button add-new-h2" href="<?php echo WP_woo_ADMIN_URL; ?>&amp;ac=add"><?php _e('Add New', 'woo-transition'); ?></a>
+	  <a class="button add-new-h2" href="<?php echo WP_woo_ADMIN_URL; ?>&amp;ac=set"><?php _e('Widget Setting', 'woo-transition'); ?></a>
+	  <a class="button add-new-h2" target="_blank" href="<?php echo WP_woo_FAV; ?>"><?php _e('Help', 'woo-transition'); ?></a>
 	  </h2>
 	  </div>
 	    <div style="height:5px"></div>
-		<h3>Plugin configuration option</h3>
+		<h3><?php _e('Plugin configuration option', 'woo-transition'); ?></h3>
 		<ol>
-			<li>Add the plugin in the posts or pages using short code.</li>
-			<li>Add directly in to the theme using PHP code.</li>
-			<li>Drag and drop the widget to your sidebar.</li>
+			<li><?php _e('Add the plugin in the posts or pages using short code.', 'woo-transition'); ?></li>
+			<li><?php _e('Add directly in to the theme using PHP code.', 'woo-transition'); ?></li>
+			<li><?php _e('Drag and drop the widget to your sidebar.', 'woo-transition'); ?></li>
 		</ol>
-	  <p class="description"><?php echo WP_woo_LINK; ?></p>
+		<p class="description">
+			<?php _e('Check official website for more information', 'woo-transition'); ?>
+			<a target="_blank" href="<?php echo WP_woo_FAV; ?>"><?php _e('click here', 'woo-transition'); ?></a>
+		</p>
 	</div>
 </div>

@@ -2,8 +2,8 @@
   <div class="form-wrap">
     <div id="icon-edit" class="icon32 icon32-posts-post"><br>
     </div>
-    <h2><?php echo WP_woo_TITLE; ?></h2>
-	<h3>Widget setting</h3>
+    <h2><?php _e('Woo superb slideshow', 'woo-transition'); ?></h2>
+	<h3><?php _e('Widget Setting', 'woo-transition'); ?></h3>
     <?php
 	$woo_title = get_option('woo_title');
 	$woo_pause = get_option('woo_pause');
@@ -30,34 +30,34 @@
 		
 		?>
 		<div class="updated fade">
-			<p><strong>Details successfully updated.</strong></p>
+			<p><strong><?php _e('Details successfully updated.', 'woo-transition'); ?></strong></p>
 		</div>
 		<?php
 	}
 	?>
-	<script language="JavaScript" src="<?php echo get_option('siteurl'); ?>/wp-content/plugins/woo-superb-slideshow-transition-gallery-with-random-effect/pages/setting.js"></script>
+	<script language="JavaScript" src="<?php echo WP_woo_PLUGIN_URL; ?>/pages/setting.js"></script>
     <form name="woo_form" method="post" action="">
       
-		<label for="tag-title">Enter widget title</label>
+		<label for="tag-title"><?php _e('Enter widget title', 'woo-transition'); ?></label>
 		<input name="woo_title" id="woo_title" type="text" value="<?php echo $woo_title; ?>" maxlength="250" size="50" />
-		<p>Enter Widget title, Only for widget.</p>
+		<p><?php _e('Enter Widget title, Only for widget.', 'woo-transition'); ?></p>
 		
-		<label for="tag-width">Pause</label>
+		<label for="tag-width"><?php _e('Pause', 'woo-transition'); ?></label>
 		<input name="woo_pause" id="woo_pause" type="text" value="<?php echo $woo_pause; ?>" maxlength="5" />
-		<p>Pause between transition change in millisec. (Example: 2000)</p>
+		<p><?php _e('Pause between transition change in millisec.', 'woo-transition'); ?> (Example: 2000)</p>
 		
-		<label for="tag-height">Transduration</label>
+		<label for="tag-height"><?php _e('Transduration', 'woo-transition'); ?></label>
 		<input name="woo_transduration" id="woo_transduration" type="text" value="<?php echo $woo_transduration; ?>" maxlength="4" />
-		<p>Please enter duration of transition, affects only IE users. (Example: 1000)</p>
+		<p><?php _e('Please enter duration of transition, affects only IE users.', 'woo-transition'); ?> (Example: 1000)</p>
 		
-		<label for="tag-title">Random</label>
+		<label for="tag-title"><?php _e('Random', 'woo-transition'); ?></label>
 		<select name="woo_random" id="woo_random">
 			<option value='YES' <?php if($woo_random == 'YES') { echo "selected='selected'" ; } ?>>Yes</option>
 			<option value='NO' <?php if($woo_random == 'NO') { echo "selected='selected'" ; } ?>>No</option>
 		</select>
-		<p>Please select random display option.</p>
+		<p><?php _e('Please select random display option.', 'woo-transition'); ?></p>
 		
-		<label for="tag-select-gallery-group">Select gallery type</label>
+		<label for="tag-select-gallery-group"><?php _e('Select gallery type', 'woo-transition'); ?></label>
 		  <select name="woo_type" id="woo_type">
 			<option value=''>Select</option>
 			<?php
@@ -78,14 +78,18 @@
 			}
 			?>
 		  </select>
-		  <p>This is to group the images. Select your slideshow group. </p>
+		  <p><?php _e('This is to group the images. Select your slideshow group.', 'woo-transition'); ?></p>
 		 
 		<input type="hidden" name="woo_form_submit" value="yes"/>
-		<input name="woo_submit" id="woo_submit" class="button" value="Submit" type="submit" />
-		<input name="publish" lang="publish" class="button" onclick="woo_redirect()" value="Cancel" type="button" />
-		<input name="Help" lang="publish" class="button" onclick="woo_help()" value="Help" type="button" />
+		<input name="woo_submit" id="woo_submit" class="button" value="<?php _e('Submit', 'woo-transition'); ?>" type="submit" />
+		<input name="publish" lang="publish" class="button" onclick="woo_redirect()" value="<?php _e('Cancel', 'woo-transition'); ?>" type="button" />
+		<input name="Help" lang="publish" class="button" onclick="woo_help()" value="<?php _e('Help', 'woo-transition'); ?>" type="button" />
 		<?php wp_nonce_field('woo_form_setting'); ?>
     </form>
   </div>
-  <br /><p class="description"><?php echo WP_woo_LINK; ?></p>
+  <br />
+<p class="description">
+	<?php _e('Check official website for more information', 'woo-transition'); ?>
+	<a target="_blank" href="<?php echo WP_woo_FAV; ?>"><?php _e('click here', 'woo-transition'); ?></a>
+</p>
 </div>

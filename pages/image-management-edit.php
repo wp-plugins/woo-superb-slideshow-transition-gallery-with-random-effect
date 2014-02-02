@@ -13,7 +13,7 @@ $result = $wpdb->get_var($sSql);
 
 if ($result != '1')
 {
-	?><div class="error fade"><p><strong>Oops, selected details doesn't exist.</strong></p></div><?php
+	?><div class="error fade"><p><strong><?php _e('Oops, selected details doesnt exist', 'woo-transition'); ?></strong></p></div><?php
 }
 else
 {
@@ -52,14 +52,14 @@ if (isset($_POST['woo_form_submit']) && $_POST['woo_form_submit'] == 'yes')
 	$form['woo_path'] = isset($_POST['woo_path']) ? $_POST['woo_path'] : '';
 	if ($form['woo_path'] == '')
 	{
-		$woo_errors[] = __('Please enter the image path.', WP_woo_UNIQUE_NAME);
+		$woo_errors[] = __('Please enter the image path.', 'woo-transition');
 		$woo_error_found = TRUE;
 	}
 
 	$form['woo_link'] = isset($_POST['woo_link']) ? $_POST['woo_link'] : '';
 	if ($form['woo_link'] == '')
 	{
-		$woo_errors[] = __('Please enter the target link.', WP_woo_UNIQUE_NAME);
+		$woo_errors[] = __('Please enter the target link.', 'woo-transition');
 		$woo_error_found = TRUE;
 	}
 	
@@ -85,9 +85,8 @@ if (isset($_POST['woo_form_submit']) && $_POST['woo_form_submit'] == 'yes')
 				LIMIT 1",
 				array($form['woo_path'], $form['woo_link'], $form['woo_target'], $form['woo_title'], $form['woo_order'], $form['woo_status'], $form['woo_type'], $did)
 			);
-		$wpdb->query($sSql);
-		
-		$woo_success = __('Image details was successfully updated.', WP_woo_UNIQUE_NAME);
+		$wpdb->query($sSql);	
+		$woo_success = __('Image details was successfully updated.', 'woo-transition');
 	}
 }
 
@@ -99,39 +98,39 @@ if ($woo_error_found == TRUE && isset($woo_errors[0]) == TRUE)
   </div>
   <?php
 }
-if ($ltw_tes_error_found == FALSE && strlen($woo_success) > 0)
+if ($woo_error_found == FALSE && strlen($woo_success) > 0)
 {
 ?>
   <div class="updated fade">
-    <p><strong><?php echo $woo_success; ?> <a href="<?php echo get_option('siteurl'); ?>/wp-admin/options-general.php?page=woo-superb-slideshow">Click here</a> to view the details</strong></p>
+    <p><strong><?php echo $woo_success; ?> <a href="<?php echo WP_woo_ADMIN_URL; ?>"><?php _e('Click here to view the details', 'woo-transition'); ?></a></strong></p>
   </div>
   <?php
 }
 ?>
-<script language="JavaScript" src="<?php echo get_option('siteurl'); ?>/wp-content/plugins/woo-superb-slideshow-transition-gallery-with-random-effect/pages/setting.js"></script>
+<script language="JavaScript" src="<?php echo WP_woo_PLUGIN_URL; ?>/pages/setting.js"></script>
 <div class="form-wrap">
 	<div id="icon-edit" class="icon32 icon32-posts-post"><br></div>
-	<h2><?php echo WP_woo_TITLE; ?></h2>
+	<h2><?php _e('Woo superb slideshow', 'woo-transition'); ?></h2>
 	<form name="form_woo" method="post" action="#" onsubmit="return woo_submit()"  >
-      <h3>Update image details</h3>
-      <label for="tag-image">Enter image path</label>
+      <h3><?php _e('Update image details', 'woo-transition'); ?></h3>
+      <label for="tag-image"><?php _e('Enter image path', 'woo-transition'); ?></label>
       <input name="woo_path" type="text" id="woo_path" value="<?php echo $form['woo_path']; ?>" size="125" />
-      <p>Where is the picture located on the internet</p>
-      <label for="tag-link">Enter target link</label>
+      <p><?php _e('Where is the picture located on the internet', 'woo-transition'); ?></p>
+      <label for="tag-link"><?php _e('Enter target link', 'woo-transition'); ?></label>
       <input name="woo_link" type="text" id="woo_link" value="<?php echo $form['woo_link']; ?>" size="125" />
-      <p>When someone clicks on the picture, where do you want to send them</p>
-      <label for="tag-target">Enter target option</label>
+      <p><?php _e('When someone clicks on the picture, where do you want to send them', 'woo-transition'); ?></p>
+      <label for="tag-target"><?php _e('Enter target option', 'woo-transition'); ?></label>
       <select name="woo_target" id="woo_target">
         <option value='_blank' <?php if($form['woo_target']=='_blank') { echo 'selected' ; } ?>>_blank</option>
         <option value='_parent' <?php if($form['woo_target']=='_parent') { echo 'selected' ; } ?>>_parent</option>
         <option value='_self' <?php if($form['woo_target']=='_self') { echo 'selected' ; } ?>>_self</option>
         <option value='_new' <?php if($form['woo_target']=='_new') { echo 'selected' ; } ?>>_new</option>
       </select>
-      <p>Do you want to open link in new window?</p>
-      <label for="tag-title">Enter image title</label>
+      <p><?php _e('Do you want to open link in new window?', 'woo-transition'); ?></p>
+      <label for="tag-title"><?php _e('Enter image title', 'woo-transition'); ?></label>
       <input name="woo_title" type="text" id="woo_title" value="<?php echo $form['woo_title']; ?>" size="125" />
-      <p>Enter image title. This is only for reference.</p>
-      <label for="tag-select-gallery-group">Select gallery type</label>
+      <p><?php _e('Enter image title. This is only for reference.', 'woo-transition'); ?></p>
+      <label for="tag-select-gallery-group"><?php _e('Select gallery type', 'woo-transition'); ?></label>
 		<select name="woo_type" id="woo_type">
 		<option value=''>Select</option>
 		<?php
@@ -162,25 +161,28 @@ if ($ltw_tes_error_found == FALSE && strlen($woo_success) > 0)
 		}
 		?>
 		</select>
-      <p>This is to group the images. Select your slideshow group. </p>
-      <label for="tag-display-status">Display status</label>
+      <p><?php _e('This is to group the images. Select your slideshow group.', 'woo-transition'); ?></p>
+      <label for="tag-display-status"><?php _e('Display status', 'woo-transition'); ?></label>
       <select name="woo_status" id="woo_status">
         <option value='YES' <?php if($form['woo_status']=='YES') { echo 'selected' ; } ?>>Yes</option>
         <option value='NO' <?php if($form['woo_status']=='NO') { echo 'selected' ; } ?>>No</option>
       </select>
-      <p>Do you want the picture to show in your galler?</p>
-      <label for="tag-display-order">Display order</label>
+      <p><?php _e('Do you want the picture to show in your galler?', 'woo-transition'); ?></p>
+      <label for="tag-display-order"><?php _e('Display order', 'woo-transition'); ?></label>
       <input name="woo_order" type="text" id="woo_order" size="10" value="<?php echo $form['woo_order']; ?>" maxlength="3" />
-      <p>What order should the picture be played in. should it come 1st, 2nd, 3rd, etc.</p>
+      <p><?php _e('What order should the picture be played in. should it come 1st, 2nd, 3rd, etc.', 'woo-transition'); ?></p>
       <input name="woo_id" id="woo_id" type="hidden" value="">
       <input type="hidden" name="woo_form_submit" value="yes"/>
       <p class="submit">
-        <input name="publish" lang="publish" class="button" value="Update Details" type="submit" />
-        <input name="publish" lang="publish" class="button" onclick="woo_redirect()" value="Cancel" type="button" />
-        <input name="Help" lang="publish" class="button" onclick="woo_help()" value="Help" type="button" />
+        <input name="publish" lang="publish" class="button" value="<?php _e('Update Details', 'woo-transition'); ?>" type="submit" />
+        <input name="publish" lang="publish" class="button" onclick="woo_redirect()" value="<?php _e('Cancel', 'woo-transition'); ?>" type="button" />
+        <input name="Help" lang="publish" class="button" onclick="woo_help()" value="<?php _e('Help', 'woo-transition'); ?>" type="button" />
       </p>
 	  <?php wp_nonce_field('woo_form_edit'); ?>
     </form>
 </div>
-<p class="description"><?php echo WP_woo_LINK; ?></p>
+<p class="description">
+	<?php _e('Check official website for more information', 'woo-transition'); ?>
+	<a target="_blank" href="<?php echo WP_woo_FAV; ?>"><?php _e('click here', 'woo-transition'); ?></a>
+</p>
 </div>

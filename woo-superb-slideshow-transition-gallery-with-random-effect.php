@@ -1,11 +1,10 @@
 <?php
-
 /*
 Plugin Name: Woo superb slideshow transition gallery with random effect
 Plugin URI: http://www.gopiplus.com/work/2010/09/19/woo-superb-slideshow-transition-gallery-with-random-effect/
 Description: Don't just display images, showcase them in style using this gallery effect plugin. Randomly chosen Transitional effects in IE browsers.  
 Author: Gopi.R
-Version: 7.1
+Version: 7.2
 Author URI: http://www.gopiplus.com/work/2010/09/19/woo-superb-slideshow-transition-gallery-with-random-effect/
 Donate link: http://www.gopiplus.com/work/2010/09/19/woo-superb-slideshow-transition-gallery-with-random-effect/
 License: GPLv2 or later
@@ -14,10 +13,19 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 global $wpdb, $wp_version;
 define("WP_woo_TABLE", $wpdb->prefix . "woo_transition");
-define("WP_woo_UNIQUE_NAME", "woo-superb-slideshow");
-define("WP_woo_TITLE", "Woo superb slideshow");
 define('WP_woo_FAV', 'http://www.gopiplus.com/work/2010/09/19/woo-superb-slideshow-transition-gallery-with-random-effect/');
-define('WP_woo_LINK', 'Check official website for more information <a target="_blank" href="'.WP_woo_FAV.'">click here</a>');
+
+if ( ! defined( 'WP_woo_BASENAME' ) )
+	define( 'WP_woo_BASENAME', plugin_basename( __FILE__ ) );
+	
+if ( ! defined( 'WP_woo_PLUGIN_NAME' ) )
+	define( 'WP_woo_PLUGIN_NAME', trim( dirname( WP_woo_BASENAME ), '/' ) );
+	
+if ( ! defined( 'WP_woo_PLUGIN_URL' ) )
+	define( 'WP_woo_PLUGIN_URL', WP_PLUGIN_URL . '/' . WP_woo_PLUGIN_NAME );
+	
+if ( ! defined( 'WP_woo_ADMIN_URL' ) )
+	define( 'WP_woo_ADMIN_URL', get_option('siteurl') . '/wp-admin/options-general.php?page=woo-superb-slideshow' );
 
 function woo_show( $type = "widget" , $random = "YES" ) 
 {
@@ -104,19 +112,19 @@ function woo_install()
 		$sSql = $sSql . "`woo_type` VARCHAR( 100 ) NOT NULL ,";
 		$sSql = $sSql . "`woo_date` INT NOT NULL ,";
 		$sSql = $sSql . "PRIMARY KEY ( `woo_id` )";
-		$sSql = $sSql . ")";
+		$sSql = $sSql . ") ENGINE=MyISAM  DEFAULT CHARSET=utf8;";
 		$wpdb->query($sSql);
 		$sSql = "INSERT INTO `". WP_woo_TABLE . "` (`woo_path`, `woo_link`, `woo_target` , `woo_title` , `woo_order` , `woo_status` , `woo_type` , `woo_date`)"; 
-		$sSql = $sSql . "VALUES ('".get_option('siteurl')."/wp-content/plugins/woo-superb-slideshow-transition-gallery-with-random-effect/images/250x167_1.jpg','#','_blank','','1', 'YES', 'widget', '0000-00-00 00:00:00');";
+		$sSql = $sSql . "VALUES ('".WP_woo_PLUGIN_URL."/images/250x167_1.jpg','#','_blank','','1', 'YES', 'widget', '0000-00-00 00:00:00');";
 		$wpdb->query($sSql);
 		$sSql = "INSERT INTO `". WP_woo_TABLE . "` (`woo_path`, `woo_link`, `woo_target` , `woo_title` , `woo_order` , `woo_status` , `woo_type` , `woo_date`)"; 
-		$sSql = $sSql . "VALUES ('".get_option('siteurl')."/wp-content/plugins/woo-superb-slideshow-transition-gallery-with-random-effect/images/250x167_2.jpg','#','_blank','','2', 'YES', 'widget', '0000-00-00 00:00:00');";
+		$sSql = $sSql . "VALUES ('".WP_woo_PLUGIN_URL."/images/250x167_2.jpg','#','_blank','','2', 'YES', 'widget', '0000-00-00 00:00:00');";
 		$wpdb->query($sSql);
 		$sSql = "INSERT INTO `". WP_woo_TABLE . "` (`woo_path`, `woo_link`, `woo_target` , `woo_title` , `woo_order` , `woo_status` , `woo_type` , `woo_date`)"; 
-		$sSql = $sSql . "VALUES ('".get_option('siteurl')."/wp-content/plugins/woo-superb-slideshow-transition-gallery-with-random-effect/images/250x167_3.jpg','#','_blank','','3', 'YES', 'PAGE', '0000-00-00 00:00:00');";
+		$sSql = $sSql . "VALUES ('".WP_woo_PLUGIN_URL."/images/250x167_3.jpg','#','_blank','','3', 'YES', 'PAGE', '0000-00-00 00:00:00');";
 		$wpdb->query($sSql);
 		$sSql = "INSERT INTO `". WP_woo_TABLE . "` (`woo_path`, `woo_link`, `woo_target` , `woo_title` , `woo_order` , `woo_status` , `woo_type` , `woo_date`)"; 
-		$sSql = $sSql . "VALUES ('".get_option('siteurl')."/wp-content/plugins/woo-superb-slideshow-transition-gallery-with-random-effect/images/250x167_4.jpg','#','_blank','','4', 'YES', 'PAGE', '0000-00-00 00:00:00');";
+		$sSql = $sSql . "VALUES ('".WP_woo_PLUGIN_URL."/images/250x167_4.jpg','#','_blank','','4', 'YES', 'PAGE', '0000-00-00 00:00:00');";
 		$wpdb->query($sSql);
 	}
 	add_option('woo_title', "Woo Slideshow");
@@ -165,19 +173,25 @@ function woo_admin_option()
 
 function woo_control()
 {
-	echo 'Woo Superb Slideshow';
+	echo '<p><b>';
+	_e('Woo Superb Slideshow', 'woo-transition');
+	echo '.</b> ';
+	_e('Check official website for more information', 'woo-transition');
+	?> <a target="_blank" href="<?php echo WP_woo_FAV; ?>"><?php _e('click here', 'woo-transition'); ?></a></p><?php
 }
 
 function woo_widget_init() 
 {
 	if(function_exists('wp_register_sidebar_widget')) 	
 	{
-		wp_register_sidebar_widget('Woo-superb-slideshow-transition', 'Woo superb slideshow', 'woo_widget');
+		wp_register_sidebar_widget('Woo-superb-slideshow-transition', 
+				__('Woo superb slideshow', 'woo-transition'), 'woo_widget');
 	}
 	
 	if(function_exists('wp_register_widget_control')) 	
 	{
-		wp_register_widget_control('Woo-superb-slideshow-transition', array('Woo superb slideshow', 'widgets'), 'woo_control');
+		wp_register_widget_control('Woo-superb-slideshow-transition', array( 
+				__('Woo superb slideshow', 'woo-transition'), 'widgets'), 'woo_control');
 	} 
 }
 
@@ -188,7 +202,8 @@ function woo_deactivation()
 
 function woo_add_to_menu() 
 {
-	add_options_page('Woo superb slideshow', 'Woo superb slideshow', 'manage_options', 'woo-superb-slideshow', 'woo_admin_option' );
+	add_options_page( __('Woo superb slideshow', 'woo-transition'), 
+				__('Woo superb slideshow', 'woo-transition'), 'manage_options', 'woo-superb-slideshow', 'woo_admin_option' );
 }
 
 if (is_admin()) 
@@ -200,10 +215,16 @@ function woo_add_javascript_files()
 {
 	if (!is_admin())
 	{
-		wp_enqueue_script( 'woo-superb-slideshow', get_option('siteurl').'/wp-content/plugins/woo-superb-slideshow-transition-gallery-with-random-effect/woo-superb-slideshow-transition-gallery-with-random-effect.js');
+		wp_enqueue_script( 'woo-superb-slideshow', WP_woo_PLUGIN_URL.'/woo-superb-slideshow-transition-gallery-with-random-effect.js');
 	}	
 }
 
+function woo_textdomain() 
+{
+	  load_plugin_textdomain( 'woo-transition', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+}
+
+add_action('plugins_loaded', 'woo_textdomain');
 add_shortcode( 'woo-superb-slideshow', 'woo_shortcode' );
 add_action('init', 'woo_add_javascript_files');
 add_action("plugins_loaded", "woo_widget_init");
