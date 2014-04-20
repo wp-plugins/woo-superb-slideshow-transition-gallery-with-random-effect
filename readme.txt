@@ -5,8 +5,8 @@ Author URI: http://gopi.coolpage.biz/demo/about/
 Plugin URI: http://www.gopiplus.com/work/2010/09/19/woo-superb-slideshow-transition-gallery-with-random-effect/
 Tags: image, slide show, slideshow, gallery, images, widget, translucent, translucent image, imagegallery, sidebar, Transitional
 Requires at least: 3.5
-Tested up to: 3.8
-Stable tag: 7.2
+Tested up to: 3.9
+Stable tag: 7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	
@@ -31,10 +31,10 @@ We can use this plug-in in three different way.
 1.	Go to widget menu and drag and drop the Woo superb slideshow transition gallery with random effect widget to your sidebar location. or <br />
 
 2. Copy and past the mentioned code to your desired template location.		
-<code><?php if (function_exists (woo_show)) woo_show(); ?></code> 		
+<code><?php woo_show( $type = "widget" , $random = "YES" ); ?></code> 		
 
 3. Use below code in post or page.		
-<code>[woo-superb-slideshow=widget=YES]</code> 		
+<code>[woo-superb-slideshow type="widget" random="YES"]</code> 		
 In above code "widget" is your gallery type, "YES" is random option.		
 
 Note : To best view all image should be in same size, because this plugin not generate any thumnail to display. 
@@ -110,6 +110,11 @@ New admin layout.
 2. Now this plugin supports localization (or internationalization). i.e. option to translate into other languages. 
 Plugin *.po file (woo-transition.po) available in the languages folder.
 
+= 7.3 =
+
+1. Tested up to 3.9
+2. Restricted direct page access.
+
 == Upgrade Notice ==
 
 = 1.0 =	
@@ -153,3 +158,8 @@ New admin layout.
 1. Tested up to 3.8
 2. Now this plugin supports localization (or internationalization). i.e. option to translate into other languages. 
 Plugin *.po file (woo-transition.po) available in the languages folder.
+
+= 7.3 =
+
+1. Tested up to 3.9
+2. Restricted direct page access.
