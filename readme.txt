@@ -5,8 +5,8 @@ Author URI: http://gopi.coolpage.biz/demo/about/
 Plugin URI: http://www.gopiplus.com/work/2010/09/19/woo-superb-slideshow-transition-gallery-with-random-effect/
 Tags: image, slide show, slideshow, gallery, images, widget, translucent, translucent image, imagegallery, sidebar, Transitional
 Requires at least: 3.5
-Tested up to: 4.0
-Stable tag: 7.4
+Tested up to: 4.1
+Stable tag: 7.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 	
@@ -125,6 +125,10 @@ Plugin *.po file (woo-transition.po) available in the languages folder.
 
 1. Tested up to 4.0
 
+= 7.5 =
+
+1. Tested up to 4.1
+
 == Upgrade Notice ==
 
 = 1.0 =	
@@ -177,3 +181,7 @@ Plugin *.po file (woo-transition.po) available in the languages folder.
 = 7.4 =
 
 1. Tested up to 4.0
+
+= 7.5 =
+
+1. Tested up to 4.1
