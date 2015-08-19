@@ -4,7 +4,7 @@ Plugin Name: Woo superb slideshow transition gallery with random effect
 Plugin URI: http://www.gopiplus.com/work/2010/09/19/woo-superb-slideshow-transition-gallery-with-random-effect/
 Description: Don't just display images, showcase them in style using this gallery effect plugin. Randomly chosen Transitional effects in IE browsers.  
 Author: Gopi Ramasamy
-Version: 7.6
+Version: 7.7
 Author URI: http://www.gopiplus.com/work/2010/09/19/woo-superb-slideshow-transition-gallery-with-random-effect/
 Donate link: http://www.gopiplus.com/work/2010/09/19/woo-superb-slideshow-transition-gallery-with-random-effect/
 License: GPLv2 or later

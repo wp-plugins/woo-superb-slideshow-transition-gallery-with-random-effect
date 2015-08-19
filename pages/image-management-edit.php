@@ -2,6 +2,7 @@
 <div class="wrap">
 <?php
 $did = isset($_GET['did']) ? $_GET['did'] : '0';
+if(!is_numeric($did)) { die('<p>Are you sure you want to do this?</p>'); }
 
 // First check if ID exist with requested ID
 $sSql = $wpdb->prepare(
@@ -109,16 +110,43 @@ if ($woo_error_found == FALSE && strlen($woo_success) > 0)
 }
 ?>
 <script language="JavaScript" src="<?php echo WP_woo_PLUGIN_URL; ?>/pages/setting.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($){
+    $('#upload-btn').click(function(e) {
+        e.preventDefault();
+        var image = wp.media({ 
+            title: 'Upload Image',
+            // mutiple: true if you want to upload multiple files at once
+            multiple: false
+        }).open()
+        .on('select', function(e){
+            // This will return the selected image from the Media Uploader, the result is an object
+            var uploaded_image = image.state().get('selection').first();
+            // We convert uploaded_image to a JSON object to make accessing it easier
+            // Output to the console uploaded_image
+            console.log(uploaded_image);
+            var img_imageurl = uploaded_image.toJSON().url;
+            // Let's assign the url value to the input field
+            $('#woo_path').val(img_imageurl);
+        });
+    });
+});
+</script>
+<?php
+wp_enqueue_script('jquery'); // jQuery
+wp_enqueue_media(); // This will enqueue the Media Uploader script
+?>
 <div class="form-wrap">
 	<div id="icon-edit" class="icon32 icon32-posts-post"><br></div>
 	<h2><?php _e('Woo superb slideshow', 'woo-transition'); ?></h2>
 	<form name="form_woo" method="post" action="#" onsubmit="return woo_submit()"  >
       <h3><?php _e('Update image details', 'woo-transition'); ?></h3>
       <label for="tag-image"><?php _e('Enter image path', 'woo-transition'); ?></label>
-      <input name="woo_path" type="text" id="woo_path" value="<?php echo $form['woo_path']; ?>" size="125" />
+      <input name="woo_path" type="text" id="woo_path" value="<?php echo $form['woo_path']; ?>" size="90" />
+	  <input type="button" name="upload-btn" id="upload-btn" class="button-secondary" value="Upload Image">
       <p><?php _e('Where is the picture located on the internet', 'woo-transition'); ?></p>
       <label for="tag-link"><?php _e('Enter target link', 'woo-transition'); ?></label>
-      <input name="woo_link" type="text" id="woo_link" value="<?php echo $form['woo_link']; ?>" size="125" />
+      <input name="woo_link" type="text" id="woo_link" value="<?php echo $form['woo_link']; ?>" size="90" />
       <p><?php _e('When someone clicks on the picture, where do you want to send them', 'woo-transition'); ?></p>
       <label for="tag-target"><?php _e('Enter target option', 'woo-transition'); ?></label>
       <select name="woo_target" id="woo_target">
@@ -129,7 +157,7 @@ if ($woo_error_found == FALSE && strlen($woo_success) > 0)
       </select>
       <p><?php _e('Do you want to open link in new window?', 'woo-transition'); ?></p>
       <label for="tag-title"><?php _e('Enter image title', 'woo-transition'); ?></label>
-      <input name="woo_title" type="text" id="woo_title" value="<?php echo $form['woo_title']; ?>" size="125" />
+      <input name="woo_title" type="text" id="woo_title" value="<?php echo $form['woo_title']; ?>" size="90" />
       <p><?php _e('Enter image title. This is only for reference.', 'woo-transition'); ?></p>
       <label for="tag-select-gallery-group"><?php _e('Select gallery type', 'woo-transition'); ?></label>
 		<select name="woo_type" id="woo_type">
